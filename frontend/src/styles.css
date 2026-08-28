@@ -9,6 +9,22 @@
   --accent: #2563eb;
   --danger: #b91c1c;
   --muted: #666666;
+  --accent-text: #ffffff;
+}
+
+/* The dark palette overrides the same names, so setting data-theme="dark" on
+   <html> re-resolves every var() below and the page repaints at once. The accent
+   is lightened to stay visible on a dark background, which in turn means the text
+   drawn on top of it has to darken: white on #60a5fa is not readable. */
+[data-theme='dark'] {
+  --bg: #1a1a1a;
+  --text: #e8e8e8;
+  --card: #262626;
+  --border: #3a3a3a;
+  --accent: #60a5fa;
+  --danger: #f87171;
+  --muted: #a0a0a0;
+  --accent-text: #1a1a1a;
 }
 
 * {
@@ -51,7 +67,7 @@ nav a:hover {
 
 nav a.active {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-text);
 }
 
 /* --- Headings --- */
@@ -167,7 +183,7 @@ button:hover {
 button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-text);
 }
 
 button.link {

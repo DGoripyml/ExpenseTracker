@@ -1,15 +1,24 @@
 import { useState } from 'react'
 
 import { CURRENCIES, getCurrency, setCurrency } from '../settings.js'
+import { applyTheme, getTheme, otherTheme, setTheme } from '../theme.js'
 
 export default function Settings() {
-  // Read the saved value once when the page mounts.
+  // Read the saved values once when the page mounts.
   const [currency, setCurrencyState] = useState(getCurrency)
+  const [theme, setThemeState] = useState(getTheme)
 
   function handleChange(event) {
     const code = event.target.value
     setCurrency(code) // save for next time
     setCurrencyState(code) // update what this page shows
+  }
+
+  function handleToggleTheme() {
+    const next = otherTheme(theme)
+    setTheme(next) // save for next time
+    applyTheme(next) // repaint the whole app straight away
+    setThemeState(next) // update this page's button label
   }
 
   return (
@@ -27,12 +36,16 @@ export default function Settings() {
             ))}
           </select>
         </div>
-      </form>
 
-      <p className="empty">
-        Changing the currency swaps the symbol shown next to amounts. It does not
-        convert values, and nothing stored is changed.
-      </p>
+        <div className="field">
+          <label htmlFor="theme">Theme</label>
+          {/* The label names the theme the button switches to, so it says what
+              pressing it does rather than reporting the current state. */}
+          <button id="theme" type="button" onClick={handleToggleTheme}>
+            Switch to {otherTheme(theme)}
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
